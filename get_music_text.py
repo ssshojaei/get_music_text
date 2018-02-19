@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.5
 import urllib.request, re, sys
 from bs4 import BeautifulSoup
 name = sys.argv
@@ -15,8 +15,8 @@ htmlBytes = response.read()
 htmlStr = htmlBytes.decode("utf8")
 
 soup = BeautifulSoup(htmlStr, "lxml")
-mydivs = soup.findAll("div", {"class": "mylink-more"})
-match = re.search('<a +href="(.+?)" *>', str(mydivs))
+div = soup.findAll("div", {"class": "mylink-more"})
+match = re.search('<a +href="(.+?)" *>', str(div))
 request = urllib.request.Request(match.group(1))
 try:
     response = urllib.request.urlopen(request)
