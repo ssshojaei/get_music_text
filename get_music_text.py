@@ -1,8 +1,12 @@
 #!/usr/bin/python3.5
 import urllib.request, re, sys
 from bs4 import BeautifulSoup
-name = sys.argv
-name = str(name[1])
+if len(sys.argv)-1 < 1:
+    name = input ("enter a music name: ")
+else :
+    name = sys.argv
+    name = str(name[1])
+
 name = name.replace(" ", "%20")
 
 request = urllib.request.Request('http://www.texahang.org/?s='+name)
@@ -16,6 +20,10 @@ htmlStr = htmlBytes.decode("utf8")
 
 soup = BeautifulSoup(htmlStr, "lxml")
 div = soup.findAll("div", {"class": "mylink-more"})
+if len(div) == 0:
+    print ("not found!!")
+    exit()
+
 match = re.search('<a +href="(.+?)" *>', str(div))
 request = urllib.request.Request(match.group(1))
 try:
